@@ -1,8 +1,10 @@
 {
     "scripts": {
-        "run": "tsx ./index.ts"
+        "main": "tsx ./index.ts",
+        "pretty": "prettier --write ."
     },
     "dependencies": {
+        "prettier": "^3.9.7",
         "tsx": "^4.23.13"
     }
 }

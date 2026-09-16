@@ -1,8 +1,4 @@
-export function maxItem(
-    array: number[],
-    startIndex: number = 0,
-    endIndex: number = array.length,
-): number {
+export function maxItem(array: number[], startIndex: number = 0, endIndex: number = array.length): number {
     let maxIndex = startIndex;
     let max = array[startIndex];
 

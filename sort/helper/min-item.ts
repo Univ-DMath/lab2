@@ -1,8 +1,4 @@
-export function minItem(
-    array: number[],
-    startIndex: number = 0,
-    endIndex: number = array.length,
-): number {
+export function minItem(array: number[], startIndex: number = 0, endIndex: number = array.length): number {
     let minIndex = startIndex;
     let min = array[startIndex];
 

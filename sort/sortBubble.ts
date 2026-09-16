@@ -1,10 +1,10 @@
 import { swap } from "./helper/swap";
 
-export function sortBubble(array: number[], startIndex: number = 0, endIndex: number = array.length): number[] {
-    for (let i = startIndex; i < endIndex; i++) {
+export function sortBubble(array: number[], start: number = 0, end: number = array.length): number[] {
+    for (let i = start; i < end; i++) {
         let swapped = false;
 
-        for (let _i = startIndex; _i < endIndex - i; _i++) {
+        for (let _i = start; _i < end - i - 1; _i++) {
             const item1 = array[_i];
             const item2 = array[_i + 1];
 
