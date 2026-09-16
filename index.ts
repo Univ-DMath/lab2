@@ -72,13 +72,13 @@ async function main() {
             show("bubble sort:", sorted);
             break;
         }
-        case SortAlgo.builtIn: {
+        case SortAlgo.insertion: {
             const sorted = sortInsertion([...arr]);
             show("before sort:   ", arr);
             show("insertion sort:", sorted);
             break;
         }
-        case SortAlgo.builtIn: {
+        case SortAlgo.selection: {
             const sorted = sortSelection([...arr]);
             show("before sort:   ", arr);
             show("selection sort:", sorted);
