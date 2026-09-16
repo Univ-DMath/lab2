@@ -1,0 +1,8 @@
+{
+    "scripts": {
+        "run": "tsx ./index.ts"
+    },
+    "dependencies": {
+        "tsx": "^4.23.13"
+    }
+}
