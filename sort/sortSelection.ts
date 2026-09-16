@@ -1,10 +1,6 @@
 import { minItem, swap } from "./helper";
 
-export function sortSelection<T extends number[]>(
-    array: T,
-    start: number = 0,
-    end: number = array.length,
-): T {
+export function sortSelection(array: number[], start: number = 0, end: number = array.length): number[] {
     for (let i = start; i < end - 1; i++) {
         const item = array[i];
 
