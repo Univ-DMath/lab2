@@ -1,9 +1,8 @@
 export function swap(array: unknown[], index1: number, index2: number): void {
-    const item1 = array.at(index1);
-    const item2 = array.at(index2);
+    if (index1 > array.length - 1 || index2 > array.length - 1)
+        throw new Error(`Indexes (${index1}, ${index2}) exceed array length (${array.length})`);
 
-    if (item1 === undefined || item2 === undefined) throw new Error();
-
-    array[index1] = item2;
-    array[index2] = item1;
+    const temp = array[index1];
+    array[index1] = array[index2];
+    array[index2] = temp;
 }

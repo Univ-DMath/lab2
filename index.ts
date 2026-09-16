@@ -1,20 +1,92 @@
+import { fileSelector } from "inquirer-file-selector";
 import { sortBubble, sortInsertion, sortSelection } from "./sort";
 import { show } from "./sort/helper";
+import { select } from "@inquirer/prompts";
+import { existsSync, readFileSync } from "node:fs";
+import z from "zod";
+import path from "node:path";
 
-// в js є вбудоване сортування .sort і .toSorted
-// (але туСортед є тільки в нових версіях, цей метод створює новий вже відсортований масив не змінюючи старий)
+enum SortAlgo {
+    builtIn,
+    bubble,
+    insertion,
+    selection,
+}
 
-const arr = [
-    1, 3, 3, 1, 4, 111, 12, 3, 1, 2312, 3, 123, 12, 3, 52, 354, 345, 543, 6, 74, 76, 5, 7, 7, 8, 9, 9,
-];
+const testFilePath = path.join(process.cwd(), "test-data", "test-array.json");
 
-const sorted = arr.toSorted((a, b) => a - b);
-const bubbleSorted = sortBubble([...arr]);
-const insertionSorted = sortInsertion([...arr]);
-const selectionSorted = sortSelection([...arr]);
+async function main() {
+    const useTestFile = await select({
+        message: "File:",
+        choices: [
+            { name: "Select file", value: false },
+            { name: "Use test file", value: true },
+        ],
+    });
 
-show("before sort:   ", arr);
-show("built in sort: ", sorted);
-show("bubble sort:   ", bubbleSorted);
-show("insertion sort:", insertionSorted);
-show("selection sort:", selectionSorted);
+    let filePath: string;
+
+    if (useTestFile) {
+        filePath = testFilePath;
+    } else {
+        const file = await fileSelector({
+            message: "Please select .json file with array of numbers",
+            type: "file",
+            filter: (item) => {
+                return item.isDirectory || /.+\.json/.test(item.name);
+            },
+        });
+
+        filePath = file.path;
+    }
+
+    if (!existsSync(filePath)) throw new Error(`File not found (path: ${filePath})`);
+
+    const arr = z
+        .number()
+        .array()
+        .parse(JSON.parse(readFileSync(filePath, "utf-8")));
+
+    const algo = await select({
+        message: "Select sorting algorithm:",
+        choices: [
+            { name: "BuiltIn-Sort", value: SortAlgo.builtIn },
+            { name: "Bubble-Sort", value: SortAlgo.bubble },
+            { name: "Insertion-Sort", value: SortAlgo.insertion },
+            { name: "Selection-Sort", value: SortAlgo.selection },
+        ],
+    });
+
+    console.log();
+
+    switch (algo) {
+        case SortAlgo.builtIn: {
+            const sorted = arr.toSorted((a, b) => a - b);
+            show("before sort:  ", arr);
+            show("built in sort:", sorted);
+            break;
+        }
+        case SortAlgo.bubble: {
+            const sorted = sortBubble([...arr]);
+            show("before sort:", arr);
+            show("bubble sort:", sorted);
+            break;
+        }
+        case SortAlgo.builtIn: {
+            const sorted = sortInsertion([...arr]);
+            show("before sort:   ", arr);
+            show("insertion sort:", sorted);
+            break;
+        }
+        case SortAlgo.builtIn: {
+            const sorted = sortSelection([...arr]);
+            show("before sort:   ", arr);
+            show("selection sort:", sorted);
+            break;
+        }
+    }
+
+    console.log();
+}
+
+main().catch(console.error);

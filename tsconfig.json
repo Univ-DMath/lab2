@@ -9,7 +9,8 @@
         "strictNullChecks": true,
         "strictFunctionTypes": true,
         "strict": true,
-        "sourceMap": true
+        "sourceMap": true,
+        "types": ["node"]
     },
     "exclude": ["node_modules", "**/node_modules/*", "*.config.js"]
 }
